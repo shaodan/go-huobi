@@ -243,3 +243,37 @@ func (c *HuobiRestClient) SubmitCancel(strOrderID string) models.PlaceReturn {
 
 	return placeReturn
 }
+
+//------------------------------------------------------------------------------------------
+// 借贷API
+
+// 申请
+// placeRequestParams: 下单信息
+// return: PlaceReturn对象
+func (c *HuobiRestClient) PlaceLoan(loanRequestParams models.LoanRequestParams) models.LoanReturn {
+	loanReturn := models.LoanReturn{}
+
+	mapParams := make(map[string]string)
+	mapParams["symbol"] = loanRequestParams.Symbol
+	mapParams["currency"] = loanRequestParams.Currency
+	mapParams["amount"] = loanRequestParams.Amount
+
+	strRequest := "/v1/margin/orders"
+	jsonLoanReturn := utils.ApiKeyPost(c.Config, mapParams, strRequest)
+	json.Unmarshal([]byte(jsonLoanReturn), &loanReturn)
+
+	return loanReturn
+}
+
+// 申请撤销一个订单请求
+// strOrderID: 订单ID
+// return: PlaceReturn对象
+func (c *HuobiRestClient) LoanCancel(strOrderID string) models.LoanReturn {
+	loanReturn := models.LoanReturn{}
+
+	strRequest := fmt.Sprintf("/v1/margin/orders/%s/repay", strOrderID)
+	jsonLoanReturn := utils.ApiKeyPost(c.Config, make(map[string]string), strRequest)
+	json.Unmarshal([]byte(jsonLoanReturn), &loanReturn)
+
+	return loanReturn
+}
