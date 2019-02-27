@@ -2,15 +2,23 @@ package services
 
 import (
 	"fmt"
+	"strconv"
 	"strings"
 	"testing"
-	"strconv"
 
-	"github.com/huobiapi/REST-GO-demo/models"
+	"github.com/shaodan/huobi-rest/models"
 )
 
+type TestEnv struct {
+	Client *HuobiRestClient
+}
+
+var env TestEnv
+
 func TestPlaceOrder(t *testing.T) {
-	account := GetAccounts()
+	BeforeAll()
+
+	account := env.Client.GetAccounts()
 
 	fmt.Println("Account: ", account)
 
@@ -37,7 +45,7 @@ func TestPlaceOrder(t *testing.T) {
 				placeParams.Type = "sell-limit"
 
 				fmt.Println("Place order with: ", placeParams)
-				placeReturn := Place(placeParams)
+				placeReturn := env.Client.Place(placeParams)
 				if placeReturn.Status == "ok" {
 					fmt.Println("Place return: ", placeReturn.Data)
 				} else {
@@ -54,11 +62,17 @@ func TestPlaceOrder(t *testing.T) {
 	}
 }
 
-func Test_getSymbols(t *testing.T)  {
-	symbols := GetSymbols()
+func Test_getSymbols(t *testing.T) {
+	symbols := env.Client.GetSymbols()
 	if symbols.Status != "ok" {
 		t.Error("failed to get symbols")
 	} else {
 		t.Logf("toal symbols: %v", len(symbols.Data))
+	}
+}
+
+func BeforeAll() {
+	env.Client = &HuobiRestClient{
+		// todo test config
 	}
 }
