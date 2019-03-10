@@ -35,3 +35,47 @@ func (c *HuobiRestClient) GetAccountBalance(strAccountID string) models.BalanceR
 
 	return balanceReturn
 }
+
+// ------------------------------------------------------------------------------------------
+// 资金API
+
+// 账号资金划转
+// TransferRequestParams: 下单信息
+// return: TransferReturn 对象
+func (c *HuobiRestClient) Transfer(transferRequestParams models.TransferRequestParams) models.TransferReturn {
+	transferReturn := models.TransferReturn{}
+
+	mapParams := make(map[string]string)
+	mapParams["sub-uid"] = transferRequestParams.SubUID
+	mapParams["currency"] = transferRequestParams.Currency
+	mapParams["amount"] = transferRequestParams.Amount
+	mapParams["type"] = string(transferRequestParams.Type)
+
+	strRequest := "/v1/subuser/transfer"
+	jsonTransferReturn := utils.ApiKeyPost(c.Config, mapParams, strRequest)
+	_ = json.Unmarshal([]byte(jsonTransferReturn), &transferReturn)
+	// master-transfer-in（子账号划转给母账户虚拟币）
+	// master-transfer-out （母账户划转给子账号虚拟币）
+	// master-point-transfer-in （子账号划转给母账户点卡）
+	// master-point-transfer-out（母账户划转给子账号点卡）
+
+	return transferReturn
+}
+
+// 虚拟币提现
+// WithdrawRequestParams: 提现信息
+// return: WithdrawReturn 对象
+func (c *HuobiRestClient) Withdraw(params models.WithdrawRequestParams) models.WithdrawReturn {
+	withdrawReturn := models.WithdrawReturn{}
+
+	mapParams := make(map[string]string)
+	mapParams["address"] = params.Address
+	mapParams["currency"] = params.Currency
+	mapParams["amount"] = params.Amount
+
+	strRequest := "/v1/dw/withdraw/api/create"
+	jsonWithdrawReturn := utils.ApiKeyPost(c.Config, mapParams, strRequest)
+	_ = json.Unmarshal([]byte(jsonWithdrawReturn), &withdrawReturn)
+
+	return withdrawReturn
+}

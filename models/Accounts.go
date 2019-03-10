@@ -39,3 +39,37 @@ type BalanceReturn struct {
 	ErrCode string  `json:"err-code"`
 	ErrMsg  string  `json:"err-msg"`
 }
+
+type TransferType string
+
+const (
+	MasterTransferIn       = TransferType("master-transfer-in")        // 子账号划转给母账户虚拟币
+	MasterTransferOut      = TransferType("master-transfer-out")       // 母账户划转给子账号虚拟币
+	MasterPointTransferIn  = TransferType("master-point-transfer-in")  // 子账号划转给母账户点卡
+	MasterPointTransferOut = TransferType("master-point-transfer-out") // 母账户划转给子账号点卡
+)
+
+type TransferRequestParams struct {
+	SubUID   string       // 子账号uid
+	Currency string       // 币种
+	Amount   string       // 划转金额
+	Type     TransferType // 划转类型
+}
+
+type TransferReturn struct {
+	Status string `json:"status"` // OK / Error
+	Data   int64  `json:"data"`   // 划转订单id
+	// Error code
+	// account-transfer-balance-insufficient-error  账户余额不足
+	// base-operation-forbidden  禁止操作（母子账号关系错误时报）
+}
+
+type WithdrawRequestParams struct {
+	Address  string // 提现钱包地址
+	Currency string // 币种
+	Amount   string // 提现数量
+}
+
+type WithdrawReturn struct {
+	Data int64 `json:"data"` // 提现ID
+}
