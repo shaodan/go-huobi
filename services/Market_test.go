@@ -6,7 +6,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/shaodan/huobi-rest/models"
+	"github.com/shaodan/go-huobi/models"
 )
 
 type TestEnv struct {

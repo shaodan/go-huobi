@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/shaodan/huobi-rest/models"
-	"github.com/shaodan/huobi-rest/utils"
+	"github.com/shaodan/go-huobi/models"
+	"github.com/shaodan/go-huobi/utils"
 )
 
 // 批量操作的API下个版本再封装

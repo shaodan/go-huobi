@@ -2,7 +2,7 @@ package services
 
 import (
 	"fmt"
-	"github.com/shaodan/huobi-rest/config"
+	"github.com/shaodan/go-huobi/config"
 )
 
 type HuobiRestClient struct {
@@ -11,13 +11,13 @@ type HuobiRestClient struct {
 
 func NewHuobiRestClient(hostname string) *HuobiRestClient {
 	url := fmt.Sprintf("https://%s", hostname)
-	config := &config.HuobiRestConfig{
+	restConfig := &config.HuobiRestConfig{
 		MarketUrl: url,
 		TradeUrl:  url,
 		HostName:  hostname,
 	}
 	return &HuobiRestClient{
-		Config: config,
+		Config: restConfig,
 	}
 }
 

@@ -14,7 +14,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/shaodan/huobi-rest/config"
+	"github.com/shaodan/go-huobi/config"
 )
 
 // Http Get请求基础函数, 通过封装Go语言Http请求, 支持火币网REST API的HTTP Get请求
