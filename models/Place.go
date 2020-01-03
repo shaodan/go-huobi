@@ -15,16 +15,3 @@ type PlaceReturn struct {
 	ErrCode string `json:"err-code"`
 	ErrMsg  string `json:"err-msg"`
 }
-
-type LoanRequestParams struct {
-	Symbol   string `json:"symbol"`   // 交易对, btcusdt, bccbtc......
-	Currency string `json:"currency"` // 借贷币种
-	Amount   string `json:"amount"`   // 借贷数量
-}
-
-type LoanReturn struct {
-	Status  string `json:"status"`
-	Data    int    `json:"data"`
-	ErrCode string `json:"err-code"`
-	ErrMsg  string `json:"err-msg"`
-}
