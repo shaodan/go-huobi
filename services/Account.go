@@ -26,14 +26,33 @@ func (c *HuobiRestClient) GetAccounts() models.AccountsReturn {
 // 根据账户ID查询账户余额
 // nAccountID: 账户ID, 不知道的话可以通过GetAccounts()获取, 可以只现货账户, C2C账户, 期货账户
 // return: BalanceReturn对象
-func (c *HuobiRestClient) GetAccountBalance(strAccountID string) models.BalanceReturn {
+func (c *HuobiRestClient) GetAccountBalance(strAccountID string) (models.BalanceReturn, error) {
 	balanceReturn := models.BalanceReturn{}
 
 	strRequest := fmt.Sprintf("/v1/account/accounts/%s/balance", strAccountID)
 	jsonBalanceReturn := utils.ApiKeyGet(c.Config, make(map[string]string), strRequest)
-	_ = json.Unmarshal([]byte(jsonBalanceReturn), &balanceReturn)
+	fmt.Println(jsonBalanceReturn)
+	err := json.Unmarshal([]byte(jsonBalanceReturn), &balanceReturn)
+	if err != nil {
+		return balanceReturn, err
+	}
+	return balanceReturn, nil
+}
 
-	return balanceReturn
+// 根据账户ID查询账户余额
+// nAccountID: 账户ID, 不知道的话可以通过GetAccounts()获取, 可以只现货账户, C2C账户, 期货账户
+// return: BalanceReturn对象
+func (c *HuobiRestClient) GetAccountBalance(strAccountID string) (models.BalanceReturn, error) {
+	balanceReturn := models.BalanceReturn{}
+
+	strRequest := fmt.Sprintf("/v1/account/accounts/%s/balance", strAccountID)
+	jsonBalanceReturn := utils.ApiKeyGet(c.Config, make(map[string]string), strRequest)
+	fmt.Println(jsonBalanceReturn)
+	err := json.Unmarshal([]byte(jsonBalanceReturn), &balanceReturn)
+	if err != nil {
+		return balanceReturn, err
+	}
+	return balanceReturn, nil
 }
 
 // ------------------------------------------------------------------------------------------
