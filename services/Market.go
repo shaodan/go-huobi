@@ -2,7 +2,6 @@ package services
 
 import (
 	"encoding/json"
-	"fmt"
 	"strconv"
 
 	"github.com/shaodan/go-huobi/models"
@@ -173,107 +172,4 @@ func (c *HuobiRestClient) GetTimestamp() models.TimestampReturn {
 	json.Unmarshal([]byte(jsonTimestampReturn), &timestampReturn)
 
 	return timestampReturn
-}
-
-//------------------------------------------------------------------------------------------
-// 用户资产API
-
-// 查询当前用户的所有账户, 根据包含的私钥查询
-// return: AccountsReturn对象
-func (c *HuobiRestClient) GetAccounts() models.AccountsReturn {
-	accountsReturn := models.AccountsReturn{}
-
-	strRequest := "/v1/account/accounts"
-	jsonAccountsReturn := utils.ApiKeyGet(c.Config, make(map[string]string), strRequest)
-	json.Unmarshal([]byte(jsonAccountsReturn), &accountsReturn)
-
-	return accountsReturn
-}
-
-// 根据账户ID查询账户余额
-// nAccountID: 账户ID, 不知道的话可以通过GetAccounts()获取, 可以只现货账户, C2C账户, 期货账户
-// return: BalanceReturn对象
-func (c *HuobiRestClient) GetAccountBalance(strAccountID string) models.BalanceReturn {
-	balanceReturn := models.BalanceReturn{}
-
-	strRequest := fmt.Sprintf("/v1/account/accounts/%s/balance", strAccountID)
-	jsonBanlanceReturn := utils.ApiKeyGet(c.Config, make(map[string]string), strRequest)
-	json.Unmarshal([]byte(jsonBanlanceReturn), &balanceReturn)
-
-	return balanceReturn
-}
-
-//------------------------------------------------------------------------------------------
-// 交易API
-
-// 下单
-// placeRequestParams: 下单信息
-// return: PlaceReturn对象
-func (c *HuobiRestClient) Place(placeRequestParams models.PlaceRequestParams) models.PlaceReturn {
-	placeReturn := models.PlaceReturn{}
-
-	mapParams := make(map[string]string)
-	mapParams["account-id"] = placeRequestParams.AccountID
-	mapParams["amount"] = placeRequestParams.Amount
-	if 0 < len(placeRequestParams.Price) {
-		mapParams["price"] = placeRequestParams.Price
-	}
-	if 0 < len(placeRequestParams.Source) {
-		mapParams["source"] = placeRequestParams.Source
-	}
-	mapParams["symbol"] = placeRequestParams.Symbol
-	mapParams["type"] = placeRequestParams.Type
-
-	strRequest := "/v1/order/orders/place"
-	jsonPlaceReturn := utils.ApiKeyPost(c.Config, mapParams, strRequest)
-	json.Unmarshal([]byte(jsonPlaceReturn), &placeReturn)
-
-	return placeReturn
-}
-
-// 申请撤销一个订单请求
-// strOrderID: 订单ID
-// return: PlaceReturn对象
-func (c *HuobiRestClient) SubmitCancel(strOrderID string) models.PlaceReturn {
-	placeReturn := models.PlaceReturn{}
-
-	strRequest := fmt.Sprintf("/v1/order/orders/%s/submitcancel", strOrderID)
-	jsonPlaceReturn := utils.ApiKeyPost(c.Config, make(map[string]string), strRequest)
-	json.Unmarshal([]byte(jsonPlaceReturn), &placeReturn)
-
-	return placeReturn
-}
-
-//------------------------------------------------------------------------------------------
-// 借贷API
-
-// 申请
-// placeRequestParams: 下单信息
-// return: PlaceReturn对象
-func (c *HuobiRestClient) PlaceLoan(loanRequestParams models.LoanRequestParams) models.LoanReturn {
-	loanReturn := models.LoanReturn{}
-
-	mapParams := make(map[string]string)
-	mapParams["symbol"] = loanRequestParams.Symbol
-	mapParams["currency"] = loanRequestParams.Currency
-	mapParams["amount"] = loanRequestParams.Amount
-
-	strRequest := "/v1/margin/orders"
-	jsonLoanReturn := utils.ApiKeyPost(c.Config, mapParams, strRequest)
-	json.Unmarshal([]byte(jsonLoanReturn), &loanReturn)
-
-	return loanReturn
-}
-
-// 申请撤销一个订单请求
-// strOrderID: 订单ID
-// return: PlaceReturn对象
-func (c *HuobiRestClient) LoanCancel(strOrderID string) models.LoanReturn {
-	loanReturn := models.LoanReturn{}
-
-	strRequest := fmt.Sprintf("/v1/margin/orders/%s/repay", strOrderID)
-	jsonLoanReturn := utils.ApiKeyPost(c.Config, make(map[string]string), strRequest)
-	json.Unmarshal([]byte(jsonLoanReturn), &loanReturn)
-
-	return loanReturn
 }
