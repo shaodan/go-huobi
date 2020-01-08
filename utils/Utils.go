@@ -14,7 +14,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/shaodan/go-huobi/config"
+	"github.com/shaodan/go-huobi"
 )
 
 // Http Get请求基础函数, 通过封装Go语言Http请求, 支持火币网REST API的HTTP Get请求
@@ -93,7 +93,7 @@ func HttpPostRequest(strUrl string, mapParams map[string]string) string {
 // mapParams: map类型的请求参数, key:value
 // strRequest: API路由路径
 // return: 请求结果
-func ApiKeyGet(cfg *config.HuobiRestConfig, mapParams map[string]string, strRequestPath string) string {
+func ApiKeyGet(cfg *huobi.RestConfig, mapParams map[string]string, strRequestPath string) string {
 	if !cfg.Logon {
 		log.Fatal("Please config HuobiAPI AccessKey and SecretKey")
 	}
@@ -127,7 +127,7 @@ func ApiKeyGet(cfg *config.HuobiRestConfig, mapParams map[string]string, strRequ
 // mapParams: map类型的请求参数, key:value
 // strRequest: API路由路径
 // return: 请求结果
-func ApiKeyPost(cfg *config.HuobiRestConfig, mapParams map[string]string, strRequestPath string) string {
+func ApiKeyPost(cfg *huobi.RestConfig, mapParams map[string]string, strRequestPath string) string {
 	if !cfg.Logon {
 		log.Fatal("Please config HuobiAPI AccessKey and SecretKey")
 	}

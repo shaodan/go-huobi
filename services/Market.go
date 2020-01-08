@@ -18,7 +18,7 @@ import (
 // strPeriod: K线类型, 1min, 5min, 15min......
 // nSize: 获取数量, [1-2000]
 // return: KLineReturn 对象
-func (c *HuobiRestClient) GetKLine(strSymbol, strPeriod string, nSize int) models.KLineReturn {
+func (c *RestClient) GetKLine(strSymbol, strPeriod string, nSize int) models.KLineReturn {
 	kLineReturn := models.KLineReturn{}
 
 	mapParams := make(map[string]string)
@@ -38,7 +38,7 @@ func (c *HuobiRestClient) GetKLine(strSymbol, strPeriod string, nSize int) model
 // 获取聚合行情
 // strSymbol: 交易对, btcusdt, bccbtc......
 // return: TickReturn对象
-func (c *HuobiRestClient) GetTicker(strSymbol string) models.TickerReturn {
+func (c *RestClient) GetTicker(strSymbol string) models.TickerReturn {
 	tickerReturn := models.TickerReturn{}
 
 	mapParams := make(map[string]string)
@@ -57,7 +57,7 @@ func (c *HuobiRestClient) GetTicker(strSymbol string) models.TickerReturn {
 // strSymbol: 交易对, btcusdt, bccbtc......
 // strType: Depth类型, step0、step1......stpe5 (合并深度0-5, 0时不合并)
 // return: MarketDepthReturn对象
-func (c *HuobiRestClient) GetMarketDepth(strSymbol, strType string) models.MarketDepthReturn {
+func (c *RestClient) GetMarketDepth(strSymbol, strType string) models.MarketDepthReturn {
 	marketDepthReturn := models.MarketDepthReturn{}
 
 	mapParams := make(map[string]string)
@@ -76,7 +76,7 @@ func (c *HuobiRestClient) GetMarketDepth(strSymbol, strType string) models.Marke
 // 获取交易细节信息
 // strSymbol: 交易对, btcusdt, bccbtc......
 // return: TradeDetailReturn对象
-func (c *HuobiRestClient) GetTradeDetail(strSymbol string) models.TradeDetailReturn {
+func (c *RestClient) GetTradeDetail(strSymbol string) models.TradeDetailReturn {
 	tradeDetailReturn := models.TradeDetailReturn{}
 
 	mapParams := make(map[string]string)
@@ -95,7 +95,7 @@ func (c *HuobiRestClient) GetTradeDetail(strSymbol string) models.TradeDetailRet
 // strSymbol: 交易对, btcusdt, bccbtc......
 // nSize: 获取交易记录的数量, 范围1-2000
 // return: TradeReturn对象
-func (c *HuobiRestClient) GetTrade(strSymbol string, nSize int) models.TradeReturn {
+func (c *RestClient) GetTrade(strSymbol string, nSize int) models.TradeReturn {
 	tradeReturn := models.TradeReturn{}
 
 	mapParams := make(map[string]string)
@@ -114,7 +114,7 @@ func (c *HuobiRestClient) GetTrade(strSymbol string, nSize int) models.TradeRetu
 // 获取Market Detail 24小时成交量数据
 // strSymbol: 交易对, btcusdt, bccbtc......
 // return: MarketDetailReturn对象
-func (c *HuobiRestClient) GetMarketDetail(strSymbol string) models.MarketDetailReturn {
+func (c *RestClient) GetMarketDetail(strSymbol string) models.MarketDetailReturn {
 	marketDetailReturn := models.MarketDetailReturn{}
 
 	mapParams := make(map[string]string)
@@ -134,7 +134,7 @@ func (c *HuobiRestClient) GetMarketDetail(strSymbol string) models.MarketDetailR
 
 // 查询系统支持的所有交易及精度
 // return: SymbolsReturn对象
-func (c *HuobiRestClient) GetSymbols() models.SymbolsReturn {
+func (c *RestClient) GetSymbols() models.SymbolsReturn {
 	symbolsReturn := models.SymbolsReturn{}
 
 	strRequestUrl := "/v1/common/symbols"
@@ -148,7 +148,7 @@ func (c *HuobiRestClient) GetSymbols() models.SymbolsReturn {
 
 // 查询系统支持的所有币种
 // return: CurrencysReturn对象
-func (c *HuobiRestClient) GetCurrencys() models.CurrencysReturn {
+func (c *RestClient) GetCurrencys() models.CurrencysReturn {
 	currencysReturn := models.CurrencysReturn{}
 
 	strRequestUrl := "/v1/common/currencys"
@@ -162,7 +162,7 @@ func (c *HuobiRestClient) GetCurrencys() models.CurrencysReturn {
 
 // 查询系统当前时间戳
 // return: TimestampReturn对象
-func (c *HuobiRestClient) GetTimestamp() models.TimestampReturn {
+func (c *RestClient) GetTimestamp() models.TimestampReturn {
 	timestampReturn := models.TimestampReturn{}
 
 	strRequest := "/v1/common/timestamp"

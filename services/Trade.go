@@ -3,6 +3,7 @@ package services
 import (
 	"encoding/json"
 	"fmt"
+
 	"github.com/shaodan/go-huobi/models"
 	"github.com/shaodan/go-huobi/utils"
 )
@@ -13,7 +14,7 @@ import (
 // 下单
 // placeRequestParams: 下单信息
 // return: PlaceReturn对象
-func (c *HuobiRestClient) Place(placeRequestParams models.PlaceRequestParams) models.PlaceReturn {
+func (c *RestClient) Place(placeRequestParams models.PlaceRequestParams) models.PlaceReturn {
 	placeReturn := models.PlaceReturn{}
 
 	mapParams := make(map[string]string)
@@ -38,7 +39,7 @@ func (c *HuobiRestClient) Place(placeRequestParams models.PlaceRequestParams) mo
 // 申请撤销一个订单请求
 // strOrderID: 订单ID
 // return: PlaceReturn对象
-func (c *HuobiRestClient) SubmitCancel(strOrderID string) models.PlaceReturn {
+func (c *RestClient) SubmitCancel(strOrderID string) models.PlaceReturn {
 	placeReturn := models.PlaceReturn{}
 
 	strRequest := fmt.Sprintf("/v1/order/orders/%s/submitcancel", strOrderID)

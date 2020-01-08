@@ -2,29 +2,31 @@ package services
 
 import (
 	"fmt"
-	"github.com/shaodan/go-huobi/config"
+
+	"github.com/shaodan/go-huobi"
 )
 
-type HuobiRestClient struct {
-	Config *config.HuobiRestConfig
+type RestClient struct {
+	Config *huobi.RestConfig
 }
 
-func NewHuobiRestClient(hostname string) *HuobiRestClient {
+func NewRestClient(hostname string) *RestClient {
 	url := fmt.Sprintf("https://%s", hostname)
-	restConfig := &config.HuobiRestConfig{
+	restConfig := &huobi.RestConfig{
 		MarketUrl: url,
 		TradeUrl:  url,
 		HostName:  hostname,
 	}
-	return &HuobiRestClient{
+	return &RestClient{
 		Config: restConfig,
 	}
 }
 
-func (c *HuobiRestClient) Login(accessKey, secretKey string) {
+func (c *RestClient) Login(accessKey, secretKey string) *RestClient {
 	cfg := c.Config
 	cfg.AccessKey = accessKey
 	cfg.SecretKey = secretKey
 	cfg.EnablePrivateSignature = false
 	cfg.Logon = true
+	return c
 }

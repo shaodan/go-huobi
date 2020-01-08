@@ -1,6 +1,6 @@
 package services
 
-var testClient = NewHuobiRestClient("api.huobi.pro")
+var testClient = NewRestClient("api.huobi.pro")
 
 func testLogin() {
 	accessKey := "your access key here"

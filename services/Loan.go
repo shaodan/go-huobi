@@ -14,7 +14,7 @@ import (
 // 查询借贷订单
 // GetLoanRequestParams: 查询信息
 // return: GetLoanReturn对象
-func (c *HuobiRestClient) GetLoanOrders(getLoanRequestParams models.GetLoanRequestParams) models.GetLoanReturn {
+func (c *RestClient) GetLoanOrders(getLoanRequestParams models.GetLoanRequestParams) models.GetLoanReturn {
 	getLoanReturn := models.GetLoanReturn{}
 
 	mapParams := make(map[string]string)
@@ -30,7 +30,7 @@ func (c *HuobiRestClient) GetLoanOrders(getLoanRequestParams models.GetLoanReque
 // 申请
 // placeRequestParams: 下单信息
 // return: PlaceReturn对象
-func (c *HuobiRestClient) PlaceLoan(loanRequestParams models.LoanRequestParams) models.LoanReturn {
+func (c *RestClient) PlaceLoan(loanRequestParams models.LoanRequestParams) models.LoanReturn {
 	loanReturn := models.LoanReturn{}
 
 	mapParams := make(map[string]string)
@@ -48,7 +48,7 @@ func (c *HuobiRestClient) PlaceLoan(loanRequestParams models.LoanRequestParams) 
 // 申请撤销一个订单请求
 // strOrderID: 订单ID
 // return: PlaceReturn对象
-func (c *HuobiRestClient) CancelLoan(strOrderID string) models.LoanReturn {
+func (c *RestClient) CancelLoan(strOrderID string) models.LoanReturn {
 	loanReturn := models.LoanReturn{}
 
 	strRequest := fmt.Sprintf("/v1/margin/orders/%s/repay", strOrderID)
