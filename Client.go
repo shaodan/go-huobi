@@ -1,18 +1,16 @@
-package services
+package huobi
 
 import (
 	"fmt"
-
-	"github.com/shaodan/go-huobi"
 )
 
 type RestClient struct {
-	Config *huobi.RestConfig
+	Config *RestConfig
 }
 
 func NewRestClient(hostname string) *RestClient {
 	url := fmt.Sprintf("https://%s", hostname)
-	restConfig := &huobi.RestConfig{
+	restConfig := &RestConfig{
 		MarketUrl: url,
 		TradeUrl:  url,
 		HostName:  hostname,

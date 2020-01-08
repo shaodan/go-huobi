@@ -1,4 +1,4 @@
-package services
+package huobi
 
 var testClient = NewRestClient("api.huobi.pro")
 

@@ -1,4 +1,4 @@
-package services
+package huobi
 
 import (
 	"encoding/json"
