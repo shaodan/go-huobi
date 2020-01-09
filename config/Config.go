@@ -1,4 +1,4 @@
-package huobi
+package config
 
 type RestConfig struct {
 	Logon     bool
